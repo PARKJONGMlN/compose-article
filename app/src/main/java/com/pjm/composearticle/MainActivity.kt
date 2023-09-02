@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Article()
+                    ComposeArticleApp()
                 }
             }
         }
@@ -38,52 +39,47 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ArticleImage(modifier: Modifier = Modifier) {
-    val image = painterResource(id = R.drawable.bg_compose_background)
-    Image(painter = image, contentDescription = null)
-}
-
-@Composable
-fun ArticleTitle(modifier: Modifier = Modifier) {
-    Text(
-        text = stringResource(R.string.article_title),
-        fontSize = 24.sp,
-        modifier = modifier.padding(16.dp)
+fun ComposeArticleApp() {
+    ArticleCard(
+        title = stringResource(id = R.string.article_title),
+        shortDescription = stringResource(id = R.string.article_first_text),
+        longDescription = stringResource(id = R.string.article_second_text),
+        imagePainter = painterResource(id = R.drawable.bg_compose_background)
     )
 }
 
 @Composable
-fun ArticleFirstText(modifier: Modifier = Modifier) {
-    Text(
-        text = stringResource(R.string.article_first_text),
-        textAlign = TextAlign.Justify,
-        modifier = modifier.padding(horizontal = 16.dp)
-    )
-}
-
-@Composable
-fun ArticleSecondText(modifier: Modifier = Modifier) {
-    Text(
-        text = stringResource(R.string.article_second_text),
-        textAlign = TextAlign.Justify,
-        modifier = modifier.padding(16.dp)
-    )
-}
-
-@Composable
-fun Article(modifier: Modifier = Modifier) {
-    Column {
-        ArticleImage()
-        ArticleTitle()
-        ArticleFirstText()
-        ArticleSecondText()
+fun ArticleCard(
+    title: String,
+    shortDescription: String,
+    longDescription: String,
+    imagePainter: Painter,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Image(painter = imagePainter, contentDescription = null)
+        Text(
+            text = title,
+            modifier = Modifier.padding(16.dp),
+            fontSize = 24.sp
+        )
+        Text(
+            text = shortDescription,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+            textAlign = TextAlign.Justify
+        )
+        Text(
+            text = longDescription,
+            modifier = Modifier.padding(16.dp),
+            textAlign = TextAlign.Justify
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ArticlePreview() {
+fun ComposeArticleAppPreview() {
     ComposeArticleTheme {
-        Article()
+        ComposeArticleApp()
     }
 }
